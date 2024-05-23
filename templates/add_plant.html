@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/D.B.Agro.css') }}" />
+    <title>Data base agro</title>
+  </head>
+  <body>
+    <header id="main-header">
+      <div class="main-header__bottom">
+        <div class="container">
+          <img src="{{ url_for('static', filename='img/D.B.Agro logo.svg') }}" alt="Logo" class="logo" />
+          <nav class="bottom-navbar right">
+            <ul>
+              <li>
+                <a href="/">Bosh sahifa</a>
+              </li>
+              <li class="none">
+                <div class="dropdown">
+                  <div class="dropdown-title">Ma'lumot</div>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="/hudud">Huddlar</a>
+                    </li><br />
+                    <li>
+                      <a href="/plants">O'simliklar</a>
+                    </li><br />
+                    {% if is_login %}
+                      <li>
+                        <a href="/detect_disease">Kasallikni aniqlash</a>
+                      </li><br />
+                      <li>
+                        <a href="/my_device">Qurilmalarim</a>
+                      </li><br />
+                    {% endif %}
+
+                    {% if is_admin %}
+                      <li>
+                        <a href="/add_plant">O'simlik qo'shish</a>
+                      </li><br />
+                    {% endif %}
+
+                    <li>
+                      <a href="#aloqa">Aloqa</a>
+                    </li><br />
+                  </ul>
+                </div>
+              </li>
+              {% if is_login %}
+                <li>{{ user['name'] }}</li>
+              {% else %}
+                <li>
+                  <a href="/login">Kirish</a>
+                </li>
+                <li>
+                  <a href="/signup">Ro'yhatdan o'tish</a>
+                </li>
+              {% endif %}
+              <li>
+                <select name="language" id="language">
+                  <option value="uz">Uz</option>
+                  <option value="ru">Ru</option>
+                  <option value="en">Eng</option>
+                </select>
+              </li>
+              {% if is_login %}
+                <li>
+                  <a href="/log_out">Chiqish</a>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
+          <div class="clear-fix"></div>
+        </div>
+      </div>
+    </header>
+
+    <section id="showcase">
+      <div class="container">
+        <div class="halff">
+          <form action="/add_plant" method="post" enctype="multipart/form-data">
+            <fieldset>
+              <h2>O'simlik qo'shish</h2>
+              <input class="input" type="text" name="name" value="" required />
+              <textarea name="definition" cols="100" rows="10"></textarea>
+              <input class="input" type="file" name="picture" value="" required />
+              <br />
+              <button class="but" type="reset">Tozalash</button>
+              <button class="but" type="submit">Yuborish</button><br />
+              {% if request.args.get('success') == '1' %}
+                <div style="color: green; background: transparent; font-style: bold; font-size: 50px;">O'simlik muvaffaqiyatli qo'shildi</div>
+              {% endif %}
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

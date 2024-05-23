@@ -1,0 +1,10 @@
+flask
+keras
+numpy
+tanserflow
+PIL
+psycopg2
+six
+tabulate
+requests
+openpyxl

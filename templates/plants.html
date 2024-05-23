@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/D.B.Agro.css') }}" />
+    <title>Data base agro</title>
+  </head>
+  <body>
+    <header id="main-header">
+      <div class="main-header__bottom">
+        <div class="container">
+          <img src="{{ url_for('static', filename = 'img/D.B.Agro logo.svg') }}" alt="Logo" class="logo" />
+          <nav class="bottom-navbar right">
+            <ul>
+              <li>
+                <a href="/">Bosh sahifa</a>
+              </li>
+              <li class="none">
+                <div class="dropdown">
+                  <div class="dropdown-title">Ma'lumot</div>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="/hudud">Huddlar</a>
+                    </li><br />
+                    <li>
+                      <a href="/plants">O'simliklar</a>
+                    </li><br />
+                    {% if is_login %}
+                      <li>
+                        <a href="/detect_disease">Kasallikni aniqlash</a>
+                      </li><br />
+                      <li>
+                        <a href="/my_device">Qurilmalarim</a>
+                      </li><br />
+                    {% endif %}
+
+                    {% if is_admin %}
+                      <li>
+                        <a href="/add_plant">O'simlik qo'shish</a>
+                      </li><br />
+                    {% endif %}
+
+                    <li>
+                      <a href="#aloqa">Aloqa</a>
+                    </li><br />
+                  </ul>
+                </div>
+              </li>
+              {% if is_login %}
+                <li>{{ user['name'] }}</li>
+              {% else %}
+                <li>
+                  <a href="/login">Kirish</a>
+                </li>
+                <li>
+                  <a href="/signup">Ro'yhatdan o'tish</a>
+                </li>
+              {% endif %}
+              <li>
+                <select name="language" id="language">
+                  <option value="uz">Uz</option>
+                  <option value="ru">Ru</option>
+                  <option value="en">Eng</option>
+                </select>
+              </li>
+              {% if is_login %}
+                <li>
+                  <a href="/log_out">Chiqish</a>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
+          <div class="clear-fix"></div>
+        </div>
+      </div>
+    </header>
+    <section class="container">
+      <div class="our" id="sabzavotlar">
+        <br /><br /> <br />
+        <h1 class="mt-5">O'simliklar</h1>
+        <div class="row mt-3">
+          {% for plant in plants %}
+            <div class="col">
+              <div class="card" style="width: 18rem;">
+                <img src="{{ url_for('static', filename = plant['pic_path']) }}" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title">{{ plant['name'] }}</h5>
+                  <p class="card-text">{{ plant['definition']|truncate(50) }}</p>
+                  <a href="/plant/{{ plant['id'] }}" class="btn btn-success">Ma'lumot olish</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <div class="subs">
+      <h1>Yangiliklarga obuna bo'lish</h1>
+      <br />
+      <div>
+        <form action="#">
+          <input class="input" type="email" placeholder=" Elektron pochta" />
+          <a href="#"><button class="button" type="submit">Obuna</button></a>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="tugadi" id="aloqa">
+      <div class="half">
+        <p>Bo'limlar</p>
+
+        <ul>
+          <li class="oxiri">
+            <i class="fas fa-home"></i><a href="./Economic greenhouse.html">Bosh sahifa</a>
+          </li>
+          <li class="oxiri">
+            <i class="fas fa-people-carry"></i><a href="#">Yetkazib berish</a>
+          </li>
+          <li class="oxiri">
+            <i class="fas fa-info-circle"></i><a href="#">Ma'lumot</a>
+          </li>
+          <li class="oxiri">
+            <i class="fa fa-phone" aria-hidden="true"></i><a href="#">Aloqa</a>
+          </li>
+        </ul>
+      </div>
+      <div class="half">
+        <p>Ma'lumot</p>
+
+        <ul>
+          <li class="oxiri">
+            <a href="#">Gidromodul</a>
+          </li>
+          <li class="oxiri">
+            <a href="#">O'simliklar</a>
+          </li>
+          <li class="oxiri">
+            <a href="#">Hududlar</a>
+          </li>
+          <li class="oxiri">
+            <a href="#">Maqbul harorat va namlik</a>
+          </li>
+        </ul>
+      </div>
+      <div class="half">
+        <p>Manzil</p>
+
+        <ul>
+          <li class="oxiri">
+            <i class="fa fa-search-location"></i> Manzil: Toshkent shaxar Mirzo Ulug'bek tumani Qori Niyoziy ko'chasi 39-uy
+          </li>
+          <li class="oxiri">
+            <i class="fa fa-phone"></i><a href="tell:">Tel: +998(93) 409 75 89:</a>
+          </li>
+          <li class="oxiri">
+            <i class="fa fa-clock"></i> Ish vaqti: 9:00-13:00, 14:00-19:00
+          </li>
+          <li class="oxiri">
+            <i class="fa fa-mail-bulk"></i><a href="#">Elektron pochta manzili: D.B.Agro@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,3 @@
+0 Early blight
+1 Late blight
+2 Sog'lom

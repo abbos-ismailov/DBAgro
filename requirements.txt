@@ -1,0 +1,10 @@
+flask
+keras
+numpy
+tensorflow=2.12.0
+pillow
+psycopg2
+six
+tabulate
+requests
+openpyxl
